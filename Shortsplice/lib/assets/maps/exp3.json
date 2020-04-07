@@ -152,7 +152,7 @@
         {
          "columns":28,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/TiledPlatformer\/JsonTiledPlatformer4.1\/assets\/images\/BaseTiles.png",
+         "image":"..\/..\/..\/..\/JsonTiledPlatformer4.1\/assets\/images\/BaseTiles.png",
          "imageheight":420,
          "imagewidth":1960,
          "margin":0,
@@ -166,6 +166,7 @@
                  "objectgroup":
                     {
                      "draworder":"index",
+                     "id":2,
                      "name":"",
                      "objects":[
                             {
@@ -191,7 +192,7 @@
         {
          "columns":14,
          "firstgid":169,
-         "image":"..\/..\/..\/..\/TiledPlatformer\/JsonTiledPlatformer4.1\/assets\/images\/backgrounds\/blue_desert.png",
+         "image":"..\/..\/..\/..\/JsonTiledPlatformer4.1\/assets\/images\/backgrounds\/blue_desert.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":0,
@@ -204,7 +205,7 @@
         {
          "columns":12,
          "firstgid":365,
-         "image":"..\/..\/..\/..\/TiledPlatformer\/JsonTiledPlatformer4.1\/assets\/images\/Enemies70.png",
+         "image":"..\/..\/..\/..\/JsonTiledPlatformer4.1\/assets\/images\/Enemies70.png",
          "imageheight":350,
          "imagewidth":840,
          "margin":0,
