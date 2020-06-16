@@ -1,4 +1,5 @@
 # log levels
+module Gosu_TiledMap
 LOG_LEVEL=:all
 LOG_LEVELS={:all=>0, :debug=>1, :severe=>2, :force=>3, :none=>4}
 
@@ -30,4 +31,5 @@ class Service
 			puts str;
 		end;	
 	end;	
+end;
 end;

@@ -1,3 +1,4 @@
+module Gosu_TiledMap
 class AbstractLayer
     attr_reader :master
     def initialize(master, data)
@@ -19,7 +20,7 @@ class TileLayer<AbstractLayer
         super(master,data)
         @data=data["data"]
         puts "Tile layer created, #{data["name"]}"
-        @iter=0
+        #@iter=0        
     end;    
 
     def draw
@@ -29,11 +30,11 @@ class TileLayer<AbstractLayer
                 gid=@data[i*@width+j]
                 if gid!=0 
                     tile=@master.getTileByGid(gid);
-                    tile.draw(j*tile.width, i*tile.height,10,1,1)
+                    tile.draw(j*tile.width-$viewport_offset_x, i*tile.height,10,1,1)
                 end;    
             end;    
         end;    
-    end;
+    end;     
 end;
 
 class ObjectLayer<AbstractLayer
@@ -46,11 +47,12 @@ class ObjectLayer<AbstractLayer
         @objects=[]
         read_objects(@data)
             #binding.pry
+        #puts "In the layer #{@name} object count is #{@objects.size}"    
     end;
 
     def draw
         @objects.each do |obj|
-            obj.draw;
+            obj.draw
         end;
     end;
 
@@ -59,10 +61,13 @@ class ObjectLayer<AbstractLayer
         return if data.empty?
         data["objects"].each do |objdata|
             if objdata["gid"] 
-                @objects<<TileObject.new(self,objdata)
+                #@objects<<TileObject.new(self,objdata)
+                TileObject.new(self,objdata)
             else
-                @objects<<EmptyObject.new(self,objdata)
+#                @objects<<EmptyObject.new(self,objdata)
+                EmptyObject.new(self,objdata)
             end;    
         end; 
     end;  
 end; 
+end;

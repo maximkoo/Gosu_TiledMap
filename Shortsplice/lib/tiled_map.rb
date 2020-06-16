@@ -1,20 +1,23 @@
 require_relative './layer.rb'
 require_relative './tileset.rb'
+require_relative './movable_game_object.rb'
 require_relative './objects.rb'
 require_relative './animation.rb'
 require 'json'
 require_relative './service.rb'
 
+
+module Gosu_TiledMap
 OBJECTLAYER="objectgroup"
 TILELAYER="tilelayer"
-SHOW_EMPTY_OBJECTS=true
-SHOW_TILED_OBJECTS=true
+SHOW_EMPTY_OBJECTS=false
+SHOW_TILED_OBJECTS=false
 LARGE_FONT= Gosu::Font.new(height=20,options={name:"Courier New"})
 
 class TiledMap
-	attr_reader :height,:width, :layers, :tilesets 
+	attr_reader :height,:width, :layers, :tilesets, :layer_x, :objects
 
-	def initialize(path_to_map,file_name)
+	def initialize(path_to_map,file_name, viewport_width=0, viewport_height=0)
 		begin
 			json=JSON.parse(File.read(File.join(path_to_map,file_name)))
 		rescue Errno::ENOENT
@@ -28,6 +31,14 @@ class TiledMap
 		@tilewidth=json["tilewidth"]
 		@tileheight=json["tileheight"]
 
+    $map_width=@width*@tilewidth
+    $map_height=@height*@tileheight
+    #puts $map_width, $map_height
+    $viewport_width=viewport_width
+    $viewport_height=viewport_height
+    $viewport_offset_x=0
+	  $viewport_offset_y=0
+      
 		@layers=[]
 		@tilesets=[]
 
@@ -78,15 +89,20 @@ class TiledMap
 			@animations+=t.animations if t.animations
 		end;	
 		puts "Tiled Map reporting: animations count is #{@animations.size}"		
-		@animations
+		
+    #get_all_objects
 	end;	
 
-	def all_objects
+	def get_all_objects
 		#return all objects from all layers
 		objs=[]
 		@layers.each do |layer|
-			objs+=layer.objects if layer.class.name=="ObjectLayer"
+			objs+=layer.objects if layer.class.name=~/ObjectLayer$/
+      puts "Layer name is #{layer.name} and its class name is #{layer.class.name} and it has #{layer.objects.size} objects" if layer.class.name=~/ObjectLayer$/
+      puts "Map reporting: current object count is #{objs.size}"
 		end;
+    puts "Map reporting: total object count is #{objs.size}"
+    @objects=objs
 		objs
 	end;	
 
@@ -96,8 +112,8 @@ class TiledMap
 
 	def getTilesetByGid(n)
 		#nn=n-2**31 if n>1000000
-		nn=nil;
-		@tilesets.select{|t| (nn||=n).between?(t.firstgid, t.lastgid)}.first
+		#nn=nil;
+		@tilesets.select{|t| n.between?(t.firstgid, t.lastgid)}.first
 	end;	
 
 	def getTileByGid(gid)
@@ -126,10 +142,39 @@ class TiledMap
 		#local_id-=2**31 if local_id>1000000
 		tileset.getTileByLocalId(local_id)
 	end;
+  
+  def objectsByPoint(x,y)
+        res=[]
+        @objects.each do |obj|
+            if (x.between?(obj.x1,obj.x2-1) && y.between?(obj.y1,obj.y2-1)) 
+                #begin
+                    res<<obj.type if !obj.type.nil?;
+                #rescue NameError => e
+                #    puts obj.class
+                #end;    
+            end;
+        end;
+        res
+    end;
 
 	def draw
 		@layers.each do |layer|
 			layer.draw;
 		end;	
 	end;
+  
+  def set_viewport_offset(px, py)    
+    if px<=$viewport_width/2
+			$viewport_offset_x=0;
+		elsif ($map_width-px)<=$viewport_width/2
+			$viewport_offset_x=$map_width-$viewport_width
+		else
+			$viewport_offset_x=px-$viewport_width/2
+		end;
+  end
+  
+  def getObjectByName(vname)    
+    @objects.select() { |obj| obj.name==vname }.first;
+  end
+end;
 end;

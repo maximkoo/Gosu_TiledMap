@@ -1,3 +1,4 @@
+module Gosu_TiledMap
 class Tileset
 	attr_reader :firstgid, :lastgid, :name, :tiles, :tilewidth, :tileheight, :tiles_data , :animations
 	def initialize(master, data)
@@ -12,7 +13,8 @@ class Tileset
 
 		@tiles_data=data["tiles"]
 
-		path=File.join(File.dirname($0),'assets','maps',data["image"]);
+		path=File.join(File.dirname($0),'assets','images',data["image"]);
+    puts path;
 		@tiles=Gosu::Image.load_tiles(path, data["tilewidth"], data["tileheight"],{tileable:true});
 
 		read_animations(data)
@@ -37,4 +39,5 @@ class Tileset
 			end;
 		end;	
 	end;	
+end;
 end;

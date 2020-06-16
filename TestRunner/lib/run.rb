@@ -41,7 +41,7 @@ class G1<Gosu::Window
 		if (now-@last_update_animations||=now) >= ANIMATION_DELAY 
 			@animations.map(&:update);
 		 	@last_update_animations=now;
-		end;	
+		end;
 	end;
 end;
 
