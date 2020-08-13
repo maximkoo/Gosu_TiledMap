@@ -1,4 +1,4 @@
-require './bin/Rectangle.rb'
+require_relative './rectangle.rb'
 module Gosu_TiledMap
 class MovableGameObject<Rectangle
 	attr_accessor :x,:y,:xS,:yS,:prevX,:prevY, :type,:name, :xx,:yy, :docked_to, :objects, :master

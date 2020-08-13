@@ -18,9 +18,9 @@ class MapObject<MovableGameObject
     #@xS,@yS=0,0 # initial speed
 
 		if data["properties"] 
-			puts 'Properties are not empty for the object with id=%s'%self.id
+			puts "Properties are not empty for the object with id=#{self.id}, (name=#{self.name})";
 			data["properties"].each do |hsh|
-					if hsh["name"]=~/^on[A_Z]*/
+					if hsh["name"]=~/^on[A_Z]*/            
             define_singleton_method(hsh["name"]) do
                 send hsh["value"].to_sym if self.respond_to?(hsh["value"])
             end;

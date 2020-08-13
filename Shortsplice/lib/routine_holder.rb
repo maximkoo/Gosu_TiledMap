@@ -16,4 +16,9 @@ module RoutineHolder
     @visible=false;
     @master.master.getObjectByName('StonePlatform').enabled=true;    
   end
+
+  def collideOrangeKey
+    puts "Orange Key!!!"
+    @master.master.getObjectByName('KeyOrange').visible=false;
+  end;  
 end;
