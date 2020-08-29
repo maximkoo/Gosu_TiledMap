@@ -176,5 +176,9 @@ class TiledMap
   def getObjectByName(vname)    
     @objects.select() { |obj| obj.name==vname }.first;
   end
+
+  def getObjectsByName(vname)    
+    @objects.select() { |obj| obj.name==vname };
+  end
 end;
 end;

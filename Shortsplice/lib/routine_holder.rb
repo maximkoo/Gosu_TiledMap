@@ -4,10 +4,6 @@ module RoutineHolder
 		@yS=1 if @yS==0
 		@yS=1 if @y<=210
 		@yS=-1 if @y>=490
-		#@y+=@yS
-    #puts "Enabled=#{@enabled}"
-    #puts methods(false).to_s
-    #puts instance_variables.to_s
 	end;
   
   def collideYellowSwitch
@@ -20,5 +16,14 @@ module RoutineHolder
   def collideOrangeKey
     puts "Orange Key!!!"
     @master.master.getObjectByName('KeyOrange').visible=false;
+    @master.master.getObjectsByName('WallOrange').each {|o| o.visible=false};
+    @master.master.getObjectByName('KeyholeOrange').visible=false;
+   end;    
+
+  def collideGreenKey
+    puts "Green key!"
+    @master.master.getObjectByName('KeyGreen').visible=false;
+    @master.master.getObjectsByName('WallGreen').each {|o| o.visible=false};
+    @master.master.getObjectByName('KeyholeGreen').visible=false;
   end;  
 end;
