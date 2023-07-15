@@ -30,7 +30,15 @@ class TileLayer<AbstractLayer
                 gid=@data[i*@width+j]
                 if gid!=0 
                     tile=@master.getTileByGid(gid);
-                    tile.draw(j*tile.width-$viewport_offset_x, i*tile.height,10,1,1)
+                    #if $cyclic
+                    #    if j*tile.width<$viewport_offset_x
+                    #        tile.draw(j*tile.width+$map_width-$viewport_offset_x, i*tile.height,10,1,1)
+                    #    else    
+                    #        tile.draw(j*tile.width-$viewport_offset_x, i*tile.height,10,1,1)
+                    #    end;    
+                    #else    
+                        tile.draw(j*tile.width-$viewport_offset_x, i*tile.height,10,1,1)
+                    #end;    
                 end;    
             end;    
         end;    

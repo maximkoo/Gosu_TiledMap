@@ -30,14 +30,23 @@ class TiledMap
 		@width=json["width"]
 		@tilewidth=json["tilewidth"]
 		@tileheight=json["tileheight"]
+		#
+		@properties=[]
+		@properties=json["properties"]||=[]
+		puts "properties:"
+		puts @properties
+		$cyclic=@properties.select {|p| p["name"]=="Cyclic" && p["value"]==true}.size>0
+		puts "cyclic=#{$cyclic}"
 
-    $map_width=@width*@tilewidth
-    $map_height=@height*@tileheight
-    #puts $map_width, $map_height
-    $viewport_width=viewport_width
-    $viewport_height=viewport_height
-    $viewport_offset_x=0
-	  $viewport_offset_y=0
+    	$map_width=@width*@tilewidth
+    	$map_height=@height*@tileheight
+    	puts "****"
+    	puts $map_width, $map_height
+    	puts "****"
+    	$viewport_width=viewport_width
+    	$viewport_height=viewport_height
+    	$viewport_offset_x=0
+	  	$viewport_offset_y=0
       
 		@layers=[]
 		@tilesets=[]
@@ -146,7 +155,8 @@ class TiledMap
   def objectsByPoint(x,y)
         res=[]
         @objects.each do |obj|
-            if (x.between?(obj.x1,obj.x2-1) && y.between?(obj.y1,obj.y2-1)) 
+            #if (x.between?(obj.x1,obj.x2-1) && y.between?(obj.y1,obj.y2-1)) 
+            if (x.between?(obj.x1,obj.x2) && y.between?(obj.y1,obj.y2)) 
                 #begin
                     res<<obj.type if !obj.type.nil?;
                 #rescue NameError => e
@@ -164,13 +174,20 @@ class TiledMap
 	end;
   
   def set_viewport_offset(px, py)    
-    if px<=$viewport_width/2
-			$viewport_offset_x=0;
-		elsif ($map_width-px)<=$viewport_width/2
-			$viewport_offset_x=$map_width-$viewport_width
-		else
-			$viewport_offset_x=px-$viewport_width/2
+    # if $cyclic
+    # 	$viewport_offset_x=px-$viewport_width/2
+
+    # else	
+
+	    if px<=$viewport_width/2
+				$viewport_offset_x=0;
+			elsif ($map_width-px)<=$viewport_width/2
+				$viewport_offset_x=$map_width-$viewport_width
+			else
+				$viewport_offset_x=px-$viewport_width/2
 		end;
+
+	#end;	
   end
   
   def getObjectByName(vname)    

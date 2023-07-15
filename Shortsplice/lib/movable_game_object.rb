@@ -10,7 +10,7 @@ class MovableGameObject<Rectangle
 		@xx=@x-$viewport_offset_x
 		@yy=@y	
 
-    @docked_to=nil;
+    	@docked_to=nil;
     
 		master.objects<<self;
 		@master=master;
@@ -24,25 +24,34 @@ class MovableGameObject<Rectangle
 
 	def update
 		@prevX=@x;
-    @prevY=@y;
-    
-    @x+=@xS;
-    #if @docked_to.nil?
-      #@x+=@xS;
-      @y+=@yS; 
-    #else 
-    if @docked_to
-      @x+=@docked_to.xS;
-      @y+=@docked_to.yS;
-      #puts "Docked, @y=#{@y}"
-    end;
-    @xx=@x-$viewport_offset_x
-		@yy=@y	
-    #
+	    @prevY=@y;
+	    
+	    @x+=@xS;
+	    #if @docked_to.nil?
+	      #@x+=@xS;
+	      @y+=@yS; 
+	    #else 
+	    if @docked_to
+	      @x+=@docked_to.xS;
+	      @y+=@docked_to.yS;
+	      #puts "Docked, @y=#{@y}"
+	    end;
+	  #   if $cyclic
+	  #   	if @x<$viewport_offset_x 
+	  #   		@xx=@x+$map_width-$viewport_offset_x
+	  #   		puts @xx
+	  #   	else	
+	  #   		@xx=@x-$viewport_offset_x
+	  #   	end;	
+			# @yy=@y
+	  #   else	
+	    	@xx=@x-$viewport_offset_x
+			@yy=@y	    
+		#end;
     
 	end;
   
-  def draw # Serves for PlayerState only
+    def draw # Serves for PlayerState only
 		img.draw(@xx,@yy,10);
 	end;
 end;

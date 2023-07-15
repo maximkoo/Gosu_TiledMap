@@ -7,15 +7,15 @@ class MapObject<MovableGameObject
 	def initialize(layer, data)
 		@layer=layer
 		#@layer.objects<<self
-    super(@layer, data["x"],data["y"])
+    	super(@layer, data["x"],data["y"])
 		@id=data["id"]
 		#@x,@y=data["x"],data["y"]
 		@width,@height=data["width"],data["height"]
-    @w,@h=data["width"],data["height"] #--<<--!!!
+    	@w,@h=data["width"],data["height"] #--<<--!!!
 		@name=data["name"]
 		@rotation,@type,@visible=data["rotation"],data["type"],data["visible"]
 		#Service.set_data_methods(self,data);		
-    #@xS,@yS=0,0 # initial speed
+    	#@xS,@yS=0,0 # initial speed
 
 		if data["properties"] 
 			puts "Properties are not empty for the object with id=#{self.id}, (name=#{self.name})";
@@ -38,7 +38,7 @@ class MapObject<MovableGameObject
 	end;
 
 	def update
-    super;
+    	super;
 		onUpdate()
 		#onDetect()
 		#onCollide()
@@ -129,7 +129,7 @@ class TileObject<MapObject
 			Gosu.draw_line(@xx+@width,@y+@height,Gosu::Color::RED,@xx,@y+height,Gosu::Color::RED,20)
 			Gosu.draw_line(@xx,@y+height,Gosu::Color::RED,@xx,@y,Gosu::Color::RED,20)
 			#LARGE_FONT.draw_text(@name,@xx,@y-@height,20,1,1,Gosu::Color::RED)
-      LARGE_FONT.draw_text(@name,@xx,@y,20,1,1,Gosu::Color::RED)
+      		LARGE_FONT.draw_text(@name,@xx,@y,20,1,1,Gosu::Color::RED)
 		end;
 	end;	
 
